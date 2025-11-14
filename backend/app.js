@@ -6,6 +6,10 @@ const cardsRouter = require('./routes/cards.js');
 const { createUser, login } = require('./controllers/users.js');
 const auth = require('./middleware/auth');
 const err = require('./middleware/error');
+const { validateInput } = require('./middleware/validateInput');
+const { errors } = require('celebrate');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+var cors = require('cors');
 
 mongoose.connect('mongodb://localhost:27017/aroundb', {
   useNewUrlParser: true,
@@ -19,15 +23,20 @@ app.use(express.json());
 
 //    next();
 //  });
-app.post('/signin', login);
-app.post('/signup', createUser);
+app(requestLogger);
+app.use(cors());
+app.options('*', cors());
+app.post('/signin', validateInput, login);
+app.post('/signup', validateInput, createUser);
 app.use(auth);
 app.use('/', usersRouter);
 app.use('/', cardsRouter);
 app.use((req, res, next) => {
   res.status(404).send({ message: 'Recurso solicitado no encontrado' });
 });
-app.use(err)
+app(errorLogger);
+app.use(errors());
+app.use(err);
 
 const { PORT = 3000 } = process.env;
 
