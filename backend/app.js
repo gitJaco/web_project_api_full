@@ -23,6 +23,8 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
   useNewUrlParser: true,
 });
 
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json());
 //  app.use((req, res, next) => {
 //    req.user = {
@@ -32,8 +34,6 @@ app.use(express.json());
 //    next();
 //  });
 app(requestLogger);
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
 app.post('/signin', validateInput, login);
 app.post('/signup', validateInput, createUser);
 app.use(auth);
