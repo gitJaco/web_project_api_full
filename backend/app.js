@@ -13,7 +13,7 @@ var cors = require('cors');
 
 
 const corsOptions = {
-  origin: 'https://jacopeth.twilightparadox.com',
+  origin: 'https://api.jacopeth.twilightparadox.com',
   methods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
