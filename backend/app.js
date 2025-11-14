@@ -9,22 +9,34 @@ const err = require('./middleware/error');
 const { validateInput } = require('./middleware/validateInput');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-var cors = require('cors');
+const cors = require('cors');
 
 
-const corsOptions = {
-  origin: 'https://jacopeth.twilightparadox.com',
-  methods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-};
+const allowedOrigins = [
+  'https://jacopeth.twilightparadox.com',
+  'https://www.jacopeth.twilightparadox.com',
+  'https://api.jacopeth.twilightparadox.com',
+  'http://localhost:3000'
+];
 
 mongoose.connect('mongodb://localhost:27017/aroundb', {
   useNewUrlParser: true,
 });
 
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin) return callback(null, true); // permite tools e insomnia
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET','POST','PATCH','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.options('*', cors());
 app.use(express.json());
 //  app.use((req, res, next) => {
 //    req.user = {
