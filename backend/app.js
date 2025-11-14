@@ -11,6 +11,14 @@ const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 var cors = require('cors');
 
+
+const corsOptions = {
+  origin: 'https://jacopeth.twilightparadox.com',
+  methods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
+
 mongoose.connect('mongodb://localhost:27017/aroundb', {
   useNewUrlParser: true,
 });
@@ -24,8 +32,8 @@ app.use(express.json());
 //    next();
 //  });
 app(requestLogger);
-app.use(cors());
-app.options('*', cors());
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.post('/signin', validateInput, login);
 app.post('/signup', validateInput, createUser);
 app.use(auth);
