@@ -33,7 +33,7 @@ app.use(express.json());
 
 //    next();
 //  });
-app(requestLogger);
+app.use(requestLogger);
 app.post('/signin', validateInput, login);
 app.post('/signup', validateInput, createUser);
 app.use(auth);
@@ -42,7 +42,7 @@ app.use('/', cardsRouter);
 app.use((req, res, next) => {
   res.status(404).send({ message: 'Recurso solicitado no encontrado' });
 });
-app(errorLogger);
+app.use(errorLogger);
 app.use(errors());
 app.use(err);
 
