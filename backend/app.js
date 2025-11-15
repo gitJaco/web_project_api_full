@@ -12,6 +12,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('cors');
 
 
+
 const allowedOrigins = [
   'https://jacopeth.twilightparadox.com',
   'https://www.jacopeth.twilightparadox.com',
