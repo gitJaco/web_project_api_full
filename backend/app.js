@@ -8,7 +8,7 @@ const auth = require('./middleware/auth');
 const err = require('./middleware/error');
 const { validateInput } = require('./middleware/validateInput');
 const { errors } = require('celebrate');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { requestLogger, errorLogger } = require('./middleware/logger');
 const cors = require('cors');
 
 
