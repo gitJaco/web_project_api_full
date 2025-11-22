@@ -17,7 +17,8 @@ const allowedOrigins = [
   'https://jacopeth.twilightparadox.com',
   'https://www.jacopeth.twilightparadox.com',
   'https://api.jacopeth.twilightparadox.com',
-  'http://localhost:3000'
+  'http://localhost:3000',
+  'http://localhost:3001',
 ];
 
 mongoose.connect('mongodb://localhost:27017/aroundb', {
